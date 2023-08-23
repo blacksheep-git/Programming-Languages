@@ -1,0 +1,32 @@
+#!/usr/bin/awk -f 
+
+BEGIN {
+    print ("<html><head><title>Real Estate Company Records</title></head><body>\n")
+    print ("<style>div.container{ display: flex; flex-wrap: wrap; align-items: stretch;} body{text-align: center;} h4{display: inline-block; padding: 0px; margin: 0px;} div.card{text-align: left; padding: 10px; flex: 0 0 200px; margin: 10px; border: 1px solid #ccc; box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);}</style>")
+    print ("<h1>Real Estate Company Records</h1>\n")
+    print ("<div class='container'>")
+    FS = ","
+    FPAT = "([^,]*)|(\"[^\"]+\")"
+}
+
+tolower($3) ~ /^(single family dwelling)/ {	
+        print("<div class='card'>")
+        printf("<div><h4>SubName:</h4> %s</div>", $5) 
+        printf("<div><h4> LOT:</h4> %s</div>", $6) 
+        printf("<div><h4> BLOCK:</h4> %s</div>", $7)
+        printf("<div><h4>Issue Date:</h4> %s</div>", $1) 
+        printf("<div><h4>Square footage:</h4> %s</div>", $4) 
+        gsub("\"", "",$8);
+        printf("<div><h4> Value:</h4> %s</div>", $8)
+        print("</div>")
+}
+
+
+END {
+    print "</div></body></html>\n";
+}
+
+
+
+
+
